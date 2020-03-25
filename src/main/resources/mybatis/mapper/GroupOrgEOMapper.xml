@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.usermanage.dao.GroupOrgEODao" >
+    <!-- Result Map-->
+    <resultMap id="BaseResultMap" type="com.adc.da.usermanage.entity.GroupOrgEO">
+        <id column="id" property="id" />
+        <result column="org_name" property="orgName" />
+        <result column="level" property="level" />
+        <result column="parent_id" property="parentId" />
+        <result column="group_org_id" property="groupOrgId" />
+        <result column="group_org_parent_id" property="groupOrgParentId" />
+        <result column="type" property="type" />
+        <result column="org_type" property="orgType" />
+        <result column="is_virtual" property="isVirtual" />
+        <result column="is_parent" property="isParent" />
+        <result column="open" property="open" />
+        <result column="description" property="description" />
+        <result column="created_at" property="createdAt" />
+        <result column="created_person" property="createdPerson" />
+        <result column="updated_at" property="updatedAt" />
+        <result column="updated_person" property="updatedPerson" />
+        <result column="del_flag" property="delFlag" />
+    </resultMap>
+
+    <!-- ts_group_org table all fields -->
+    <sql id="Base_Column_List" >
+        id, org_name, level, parent_id, group_org_id, group_org_parent_id, type, org_type, is_virtual, is_parent, open, description, created_at, created_person, updated_at, updated_person, del_flag
+    </sql>
+
+    <!-- 查询条件 -->
+    <sql id="Base_Where_Clause">
+        where 1=1
+        <trim suffixOverrides="," >
+            <if test="id != null" >
+                and id ${idOperator} #{id}
+            </if>
+            <if test="orgName != null" >
+                and org_name ${orgNameOperator} #{orgName}
+            </if>
+            <if test="level != null" >
+                and level ${levelOperator} #{level}
+            </if>
+            <if test="parentId != null" >
+                and parent_id ${parentIdOperator} #{parentId}
+            </if>
+            <if test="groupOrgId != null" >
+                and group_org_id ${groupOrgIdOperator} #{groupOrgId}
+            </if>
+            <if test="groupOrgParentId != null" >
+                and group_org_parent_id ${groupOrgParentIdOperator} #{groupOrgParentId}
+            </if>
+            <if test="type != null" >
+                and type ${typeOperator} #{type}
+            </if>
+            <if test="orgType != null" >
+                and org_type ${orgTypeOperator} #{orgType}
+            </if>
+            <if test="isVirtual != null" >
+                and is_virtual ${isVirtualOperator} #{isVirtual}
+            </if>
+            <if test="isParent != null" >
+                and is_parent ${isParentOperator} #{isParent}
+            </if>
+            <if test="open != null" >
+                and open ${openOperator} #{open}
+            </if>
+            <if test="description != null" >
+                and description ${descriptionOperator} #{description}
+            </if>
+            <if test="createdAt != null" >
+                and created_at ${createdAtOperator} #{createdAt}
+            </if>
+            <if test="createdAt1 != null" >
+                and created_at &gt;= #{createdAt1}
+            </if>
+            <if test="createdAt2 != null" >
+                and created_at &lt;= #{createdAt2}
+            </if>
+            <if test="createdPerson != null" >
+                and created_person ${createdPersonOperator} #{createdPerson}
+            </if>
+            <if test="updatedAt != null" >
+                and updated_at ${updatedAtOperator} #{updatedAt}
+            </if>
+            <if test="updatedAt1 != null" >
+                and updated_at &gt;= #{updatedAt1}
+            </if>
+            <if test="updatedAt2 != null" >
+                and updated_at &lt;= #{updatedAt2}
+            </if>
+            <if test="updatedPerson != null" >
+                and updated_person ${updatedPersonOperator} #{updatedPerson}
+            </if>
+            <if test="delFlag != null" >
+                and del_flag ${delFlagOperator} #{delFlag}
+            </if>
+        </trim>
+    </sql>
+
+    <!-- 插入记录 -->
+    <insert id="insert" parameterType="com.adc.da.usermanage.entity.GroupOrgEO" >
+    <!-- <selectKey resultType="java.lang.Long" order="BEFORE" keyProperty="id">
+    SELECT SEQ_ts_group_org.NEXTVAL FROM DUAL
+    </selectKey> -->
+        insert into ts_group_org
+        (<include refid="Base_Column_List" />)
+        values (#{id, jdbcType=VARCHAR}, #{orgName, jdbcType=VARCHAR}, #{level, jdbcType=INTEGER}, #{parentId, jdbcType=VARCHAR}, #{groupOrgId, jdbcType=VARCHAR}, #{groupOrgParentId, jdbcType=VARCHAR}, #{type, jdbcType=VARCHAR}, #{orgType, jdbcType=VARCHAR}, #{isVirtual, jdbcType=VARCHAR}, #{isParent, jdbcType=VARCHAR}, #{open, jdbcType=VARCHAR}, #{description, jdbcType=VARCHAR}, #{createdAt, jdbcType=TIMESTAMP}, #{createdPerson, jdbcType=VARCHAR}, #{updatedAt, jdbcType=TIMESTAMP}, #{updatedPerson, jdbcType=VARCHAR}, #{delFlag, jdbcType=VARCHAR})
+    </insert>
+
+    <!-- 动态插入记录 主键是序列 -->
+    <insert id="insertSelective" parameterType="com.adc.da.usermanage.entity.GroupOrgEO" >
+    <!-- <selectKey resultType="java.lang.Long" order="BEFORE" keyProperty="id">
+    SELECT SEQ_ts_group_org.NEXTVAL FROM DUAL
+    </selectKey> -->
+        insert into ts_group_org
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >id,</if>
+            <if test="orgName != null" >org_name,</if>
+            <if test="level != null" >level,</if>
+            <if test="parentId != null" >parent_id,</if>
+            <if test="groupOrgId != null" >group_org_id,</if>
+            <if test="groupOrgParentId != null" >group_org_parent_id,</if>
+            <if test="type != null" >type,</if>
+            <if test="orgType != null" >org_type,</if>
+            <if test="isVirtual != null" >is_virtual,</if>
+            <if test="isParent != null" >is_parent,</if>
+            <if test="open != null" >open,</if>
+            <if test="description != null" >description,</if>
+            <if test="createdAt != null" >created_at,</if>
+            <if test="createdPerson != null" >created_person,</if>
+            <if test="updatedAt != null" >updated_at,</if>
+            <if test="updatedPerson != null" >updated_person,</if>
+            <if test="delFlag != null" >del_flag,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >#{id, jdbcType=VARCHAR},</if>
+            <if test="orgName != null" >#{orgName, jdbcType=VARCHAR},</if>
+            <if test="level != null" >#{level, jdbcType=INTEGER},</if>
+            <if test="parentId != null" >#{parentId, jdbcType=VARCHAR},</if>
+            <if test="groupOrgId != null" >#{groupOrgId, jdbcType=VARCHAR},</if>
+            <if test="groupOrgParentId != null" >#{groupOrgParentId, jdbcType=VARCHAR},</if>
+            <if test="type != null" >#{type, jdbcType=VARCHAR},</if>
+            <if test="orgType != null" >#{orgType, jdbcType=VARCHAR},</if>
+            <if test="isVirtual != null" >#{isVirtual, jdbcType=VARCHAR},</if>
+            <if test="isParent != null" >#{isParent, jdbcType=VARCHAR},</if>
+            <if test="open != null" >#{open, jdbcType=VARCHAR},</if>
+            <if test="description != null" >#{description, jdbcType=VARCHAR},</if>
+            <if test="createdAt != null" >#{createdAt, jdbcType=TIMESTAMP},</if>
+            <if test="createdPerson != null" >#{createdPerson, jdbcType=VARCHAR},</if>
+            <if test="updatedAt != null" >#{updatedAt, jdbcType=TIMESTAMP},</if>
+            <if test="updatedPerson != null" >#{updatedPerson, jdbcType=VARCHAR},</if>
+            <if test="delFlag != null" >#{delFlag, jdbcType=VARCHAR},</if>
+        </trim>
+    </insert>
+
+    <!-- 根据pk，修改记录-->
+    <update id="updateByPrimaryKey" parameterType="com.adc.da.usermanage.entity.GroupOrgEO" >
+        update ts_group_org
+        set  org_name = #{orgName},
+          level = #{level},
+          parent_id = #{parentId},
+          group_org_id = #{groupOrgId},
+          group_org_parent_id = #{groupOrgParentId},
+          type = #{type},
+          org_type = #{orgType},
+          is_virtual = #{isVirtual},
+          is_parent = #{isParent},
+          open = #{open},
+          description = #{description},
+          created_at = #{createdAt},
+          created_person = #{createdPerson},
+          updated_at = #{updatedAt},
+          updated_person = #{updatedPerson},
+          del_flag = #{delFlag}        where  id = #{id}    </update>
+
+    <!-- 修改记录，只修改只不为空的字段 -->
+    <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.usermanage.entity.GroupOrgEO" >
+        update ts_group_org
+        <set>
+        <if test="orgName != null" >
+            org_name = #{orgName},
+        </if>
+        <if test="level != null" >
+            level = #{level},
+        </if>
+        <if test="parentId != null" >
+            parent_id = #{parentId},
+        </if>
+        <if test="groupOrgId != null" >
+            group_org_id = #{groupOrgId},
+        </if>
+        <if test="groupOrgParentId != null" >
+            group_org_parent_id = #{groupOrgParentId},
+        </if>
+        <if test="type != null" >
+            type = #{type},
+        </if>
+        <if test="orgType != null" >
+            org_type = #{orgType},
+        </if>
+        <if test="isVirtual != null" >
+            is_virtual = #{isVirtual},
+        </if>
+        <if test="isParent != null" >
+            is_parent = #{isParent},
+        </if>
+        <if test="open != null" >
+            open = #{open},
+        </if>
+        <if test="description != null" >
+            description = #{description},
+        </if>
+        <if test="createdAt != null" >
+            created_at = #{createdAt},
+        </if>
+        <if test="createdPerson != null" >
+            created_person = #{createdPerson},
+        </if>
+        <if test="updatedAt != null" >
+            updated_at = #{updatedAt},
+        </if>
+        <if test="updatedPerson != null" >
+            updated_person = #{updatedPerson},
+        </if>
+        <if test="delFlag != null" >
+            del_flag = #{delFlag},
+        </if>
+        </set>
+        where id = #{id}    </update>
+
+    <!-- 根据id查询 ts_group_org -->
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select <include refid="Base_Column_List" />
+        from ts_group_org
+        where id = #{value}
+    </select>
+    <!-- 根据group_org_id查询 ts_group_org -->
+    <select id="selectBygrouporgid" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select <include refid="Base_Column_List" />
+        from ts_group_org
+        where group_org_id = #{value}
+    </select>
+    <!-- 根据group_org_id查询 ts_group_org -->
+    <select id="selectBygrouporgpid" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select <include refid="Base_Column_List" />
+        from ts_group_org
+        where group_org_parent_id = #{value}
+    </select>
+
+    <!-- 删除记录 -->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from ts_group_org
+        where id = #{value}
+    </delete>
+
+    <!-- ts_group_org 列表总数-->
+    <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+        select count(1) from ts_group_org
+        <include refid="Base_Where_Clause"/>
+    </select>
+
+    <!-- 查询ts_group_org列表 -->
+    <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+        select
+            <include refid="Base_Column_List" />
+        from
+            ts_group_org
+        <include refid="Base_Where_Clause"/>
+        <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+            ${pager.orderCondition}
+        </if>
+        limit #{pager.pageSize} OFFSET #{pager.pageOffset}
+    </select>
+
+    <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+        select <include refid="Base_Column_List"/> from ts_group_org
+            <include refid="Base_Where_Clause"/>
+                <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+            ${pager.orderCondition}
+        </if>
+    </select>
+
+    <delete id="deleteGroupOrgInfo">
+        delete from ts_group_org
+    </delete>
+
+    <delete id="deleteGroupOrgBakInfo">
+        delete from ts_group_org_bak
+    </delete>
+
+    <insert id="backupGroupOrgInfo">
+        insert into ts_group_org_bak
+        select
+          id,
+          org_name,
+          level,
+          parent_id,
+          group_org_id,
+          group_org_parent_id,
+          type,
+          org_type,
+          is_virtual,
+          is_parent,
+          open,
+          description,
+          created_at,
+          created_person,
+          updated_at,
+          updated_person,
+          del_flag
+        from ts_group_org
+    </insert>
+</mapper>

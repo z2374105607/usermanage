@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.usermanage.dao.UserOrgEODao" >
+    <!-- Result Map-->
+    <resultMap id="BaseResultMap" type="com.adc.da.usermanage.entity.UserOrgEO" >
+        <id column="org_id" property="orgId" />
+        <result column="user_id" property="userId" />
+        <result column="type" property="type" />
+    </resultMap>
+
+    <!-- tr_user_org table all fields -->
+    <sql id="Base_Column_List" >
+        org_id, user_id, type
+    </sql>
+
+    <!-- 查询条件 -->
+    <sql id="Base_Where_Clause">
+        where 1=1
+        <trim suffixOverrides="," >
+            <if test="orgId != null" >
+                and org_id ${orgIdOperator} #{orgId}
+            </if>
+            <if test="userId != null" >
+                and user_id ${userIdOperator} #{userId}
+            </if>
+            <if test="type != null" >
+                and type ${typeOperator} #{type}
+            </if>
+        </trim>
+    </sql>
+
+    <!-- 插入记录 -->
+    <insert id="insert" parameterType="com.adc.da.usermanage.entity.UserOrgEO" >
+    <!-- <selectKey resultType="java.lang.Long" order="BEFORE" keyProperty="org_id">
+    SELECT SEQ_tr_user_org.NEXTVAL FROM DUAL
+    </selectKey> -->
+        insert into tr_user_org
+        (<include refid="Base_Column_List" />)
+        values (#{orgId, jdbcType=VARCHAR}, #{userId, jdbcType=VARCHAR}, #{type, jdbcType=VARCHAR})
+    </insert>
+
+    <!-- 动态插入记录 主键是序列 -->
+    <insert id="insertSelective" parameterType="com.adc.da.usermanage.entity.UserOrgEO" >
+    <!-- <selectKey resultType="java.lang.Long" order="BEFORE" keyProperty="org_id">
+    SELECT SEQ_tr_user_org.NEXTVAL FROM DUAL
+    </selectKey> -->
+        insert into tr_user_org
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="orgId != null" >org_id,</if>
+            <if test="userId != null" >user_id,</if>
+            <if test="type != null" >type,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="orgId != null" >#{orgId, jdbcType=VARCHAR},</if>
+            <if test="userId != null" >#{userId, jdbcType=VARCHAR},</if>
+            <if test="type != null" >#{type, jdbcType=VARCHAR},</if>
+        </trim>
+    </insert>
+
+    <!-- 根据pk，修改记录-->
+    <update id="updateByPrimaryKey" parameterType="com.adc.da.usermanage.entity.UserOrgEO" >
+        update tr_user_org
+        set  user_id = #{userId},
+          type = #{type}        where  org_id = #{orgId}    </update>
+
+    <!-- 修改记录，只修改只不为空的字段 -->
+    <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.usermanage.entity.UserOrgEO" >
+        update tr_user_org
+        <set>
+        <if test="userId != null" >
+            user_id = #{userId},
+        </if>
+        <if test="type != null" >
+            type = #{type},
+        </if>
+        </set>
+        where org_id = #{orgId}    </update>
+
+    <!-- 根据id查询 tr_user_org -->
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select <include refid="Base_Column_List" />
+        from tr_user_org
+        where org_id = #{value}
+    </select>
+
+    <!-- 删除记录 -->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from tr_user_org
+        where org_id = #{value}
+    </delete>
+
+    <!-- tr_user_org 列表总数-->
+    <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+        select count(1) from tr_user_org
+        <include refid="Base_Where_Clause"/>
+    </select>
+
+    <!-- 查询tr_user_org列表 -->
+    <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+        select
+            <include refid="Base_Column_List" />
+        from
+            tr_user_org
+        <include refid="Base_Where_Clause"/>
+        <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+            ${pager.orderCondition}
+        </if>
+        limit #{pager.pageSize} OFFSET #{pager.pageOffset}
+    </select>
+
+    <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+        select <include refid="Base_Column_List"/> from tr_user_org
+            <include refid="Base_Where_Clause"/>
+                <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+            ${pager.orderCondition}
+        </if>
+    </select>
+
+    <!-- 删除记录 -->
+    <delete id="deleteByUserId" parameterType="java.lang.Long">
+        delete from tr_user_org
+        where user_id = #{value}
+    </delete>
+
+    <select id="selectByUserId" parameterType="java.lang.Long" resultType="java.lang.Long">
+        select org_id from tr_user_org
+        where user_id = #{value}
+    </select>
+
+    <!-- 删除记录 -->
+    <delete id="deleteByType" parameterType="java.lang.String">
+        delete from tr_user_org
+        where type = #{value}
+    </delete>
+
+    <!-- 删除记录 -->
+    <delete id="deleteUserOrgBakInfo">
+        delete from tr_user_org_bak
+    </delete>
+
+    <insert id="backupUserOrgInfo">
+        insert into tr_user_org_bak
+        select
+          org_id,
+          user_id,
+          type
+        from tr_user_org
+        where type = '0'
+    </insert>
+
+</mapper>
