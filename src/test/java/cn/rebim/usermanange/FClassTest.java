@@ -34,6 +34,6 @@ public class FClassTest {
 
 	@Test
 	public void fclassinsertTeat() {
-		//dataSynchronizationBatchService.dataSynchronization();
+		dataSynchronizationBatchService.dataSynchronization();
 	}
 }
