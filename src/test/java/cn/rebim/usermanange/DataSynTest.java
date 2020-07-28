@@ -21,7 +21,7 @@ import com.adc.da.usermanage.service.DataSynchronizationBatchService;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = { Application.class })
 @AutoConfigureMockMvc
-public class FClassTest {
+public class DataSynTest {
 	
 	@Autowired
 	private DataSynchronizationBatchService dataSynchronizationBatchService;
